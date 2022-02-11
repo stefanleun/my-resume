@@ -104,26 +104,18 @@
 \definecolor{darkgray}{HTML}{333333}
 \definecolor{mediumgray}{HTML}{444444}
 \definecolor{gray}{HTML}{5D5D5D}
-% Basic colors
-\definecolor{green}{HTML}{C2E15F}
-\definecolor{orange}{HTML}{FDA333}
-\definecolor{purple}{HTML}{D3A4F9}
-\definecolor{red}{HTML}{FB4485}
-\definecolor{blue}{HTML}{6CE0F1}
+\definecolor{lightgray}{HTML}{b5b5b5}
+
 % Text colors
 \definecolor{darktext}{HTML}{414141}
 \colorlet{text}{darkgray}
 \colorlet{graytext}{gray}
-% Awesome colors
-\definecolor{awesome-emerald}{HTML}{00A388}
-\definecolor{awesome-skyblue}{HTML}{0395DE}
-\definecolor{awesome-red}{HTML}{DC3522}
-\definecolor{awesome-pink}{HTML}{EF4089}
-\definecolor{awesome-orange}{HTML}{FF6138}
-\definecolor{awesome-nephritis}{HTML}{27AE60}
-\definecolor{awesome-concrete}{HTML}{95A5A6}
-\definecolor{awesome-darknight}{HTML}{131A28}
 
+% Custom Colors
+\definecolor{dark-blue}{HTML}{363a46}
+\definecolor{blue}{HTML}{276591}
+\definecolor{light-blue}{HTML}{4f8dba}
+\definecolor{green}{HTML}{6ca380}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % COLORED BARS
@@ -259,7 +251,7 @@
             }{}
             % print the header text
                 \begin{minipage}[t][2em]{\linewidth}
-                    {\Huge\bfseries\color{headerfontcolor}\MakeUppercase{\@name}\par}
+                    {\Huge\bfseries\color{headerfontcolor}\textrm{\@name}\par}
                 \end{minipage}%
                 \vfill%
                 \begin{minipage}[b][\dimexpr \headerheight-2em-\marginbottom]{\linewidth}%
@@ -285,6 +277,35 @@
     \vspace*{\dimexpr \headerheight+0.5em}
 }
 
+\newcommand{\clmail}[1]{\def\@clmail{#1}}
+\newcommand{\clphone}[1]{\def\@clphone{#1}}
+
+% assemble the header
+\newcommand{\makeclheader}{% header bar is a minipage
+    \begin{minipage}[t][\headerheight]{\textwidth}%
+        % \vspace{-1em}
+        \vspace{\dimexpr \@namefontheight-\@namelineheight}                     % align top of name and photo
+        % create two minipages for header text and photo if photo is given
+            \begin{minipage}[t]{\dimexpr \textwidth-4.3cm}        % to top align name and photo add [t] here
+                \vspace{0cm}%
+            % print the header text
+                \begin{minipage}[t][2em]{\linewidth}
+                    {\Huge\bfseries\color{headerfontcolor}\textrm{\@name}\par}
+                \end{minipage}%
+                \vfill%
+                \begin{minipage}[b][\dimexpr \headerheight-2em-\marginbottom]{\linewidth}%
+                    {\large\bfseries\color{headerfontcolor}\par}
+                \end{minipage}%
+        % finish the minipages for text and photo if photo is given
+            \end{minipage}\hfil%
+            \begin{minipage}[t]{4.3cm}                                % to top align name and photo add [t] here
+                \vspace{0cm}
+    			% format as square or round
+                {\color{headerfontcolor}\@clmail\par}
+                {\color{headerfontcolor}\@clphone\par}
+    		\end{minipage}%
+	\end{minipage}%
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % BODY
@@ -300,6 +321,7 @@
 \newcommand{\phone}[1]{\infofield{\faPhone}{#1}}
 \newcommand{\homepage}[2]{\infofield{\faHome}{\href{#2}{#1}}}
 \newcommand{\linkedin}[2]{\infofield{\faLinkedin}{\href{#2}{#1}}}
+\newcommand{\xing}[2]{\infofield{\faXing}{\href{#2}{#1}}}
 \newcommand{\github}[2]{\infofield{\faGithub}{\href{#2}{#1}}}
 \newcommand{\orcid}[2]{\infofield{\aiOrcid}{\href{#2}{#1}}}
 \newcommand{\ads}[2]{\infofield{\aiADS}{\href{#2}{#1}}}
@@ -358,8 +380,8 @@
     \bigskip%
     % \ifstrequal{#1}{}{}{\marginpar{\vspace*{\dimexpr 1pt-\baselineskip}\raggedright\input{#1}}}%
     \ifstrequal{#1}{}{}{\large \makebox[5mm][c]{#1}\hspace{0.5em}}
-    {\color{heading}\Large\bfseries\MakeUppercase{#2}}\\[-1ex]%
-    {\color{heading}\rule{\linewidth}{1.0pt}\par}\smallskip
+    {\color{heading}\Large\bfseries\textrm{#2}}\\[-1ex]%
+    {\color{lightgray}\rule{\linewidth}{1.0pt}\par}\smallskip
 }
 
 % redefine subsection as bold
@@ -370,55 +392,34 @@
 
 % format job/school list
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% set length of date/place column versus position column in fraction of linewidth before linewidth gets redefined in minipages
-\newlength{\jobdateplacelength}
-\newlength{\jobpositionlength}
-\setlength{\jobdateplacelength}{0.4\linewidth}
-\setlength{\jobpositionlength}{0.6\linewidth}
 \newcommand{\job}[4]{%
-    \begin{minipage}[t]{\jobdateplacelength}% minipage for left column with date/place
+    {\color{emphasis} \textbf{\textrm{#3}}}
         \footnotesize
-        \begin{minipage}[t]{3mm}% wrap marker in minipage to allow multi-line dates
-            \makebox[3mm][c]{\faCalendar}
-        \end{minipage}%
         \hspace{0.5em}%
-        \begin{minipage}[t]{\dimexpr \jobdateplacelength-3mm-0.5em}% wrap date in minipage to allow multi-line dates
-            #1
-        \end{minipage}%
+          #2
         \par
         \vspace{0.1em}
-        \begin{minipage}[t]{3mm}% wrap marker in minipage to allow multi-line places
-            \makebox[3mm][c]{\faMapMarker}
-        \end{minipage}%
-        \hspace{0.5em}%
-        \begin{minipage}[t]{\dimexpr \jobdateplacelength-3mm-0.5em}% wrap place in minipage to allow multi-line places
-            #2
-        \end{minipage}%
-    \end{minipage}%
-    \begin{minipage}[t]{\jobpositionlength}% minipage for position
-        {\large \color{emphasis} #3}
-    \end{minipage}%
-    \ifstrequal{#4}{}{}{\par \vspace{0.1em} \footnotesize #4}
+          {\color{gray}    #1}
+    \ifstrequal{#4}{}{}{\par \vspace{0.1em} #4}
     \par\normalsize
     \vspace{0.5em}
 }
 
 
-% skill with 5 dot bar chart
+% skill with 3 dot bar chart
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\skill}[2]{%
-    \textcolor{emphasis}{\textbf{#1}}\hfill
-    \foreach \x in {1,...,5}{%
-      \space{\ifnumgreater{\x}{#2}{\color{gray}}{\color{accent}}\faCircle}}\par%
+    \textcolor{emphasis}{#1}\hfill
+    \foreach \x in {1,...,3}{%
+      \space{\ifnumgreater{\x}{#2}{\color{lightgray}}{\color{accent}}\faCircle}}\par%
 }
 
 % skill without any charts
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\simpleskill}[1]{%
-    \textcolor{emphasis}{\textbf{#1}}\par%
+    \textcolor{emphasis}{#1}\par%
 }
 
 % sectioning of skills
@@ -497,8 +498,8 @@
 % publication
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand*{\ADS}[1]{\textcolor{awesome-skyblue}{\href{#1}{ADS}}}
-\newcommand*{\arXiv}[1]{\textcolor{awesome-skyblue}{\href{#1}{arXiv}}}
+\newcommand*{\ADS}[1]{{\href{#1}{ADS}}}
+\newcommand*{\arXiv}[1]{{\href{#1}{arXiv}}}
 
 \newlength{\pubdatelength}
 \newlength{\pubjournallength}
