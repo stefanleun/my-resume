@@ -79,8 +79,8 @@
 \setlength\headerheight{6cm}
 \setlength\marginleft{1cm}
 \setlength\marginright{\marginleft}
-\setlength\margintop{1cm}
-\setlength\marginbottom{1cm}
+\setlength\margintop{0.5cm}
+\setlength\marginbottom{0.5cm}
 
 \RequirePackage[bindingoffset=0cm,nomarginpar,noheadfoot]{geometry}
 \geometry{left=\marginleft,right=\marginright,top=\margintop,bottom=\marginbottom}
@@ -255,7 +255,7 @@
                 \end{minipage}%
                 \vfill%
                 \begin{minipage}[b][\dimexpr \headerheight-2em-\marginbottom]{\linewidth}%
-                    {\large\bfseries\color{headerfontcolor}\@tagline\par}
+                    {\large\color{headerfontcolor}\@tagline\par}
                 \end{minipage}%
         % finish the minipages for text and photo if photo is given
         \ifdef{\@photodiameter}{%
@@ -314,7 +314,7 @@
 % contact info
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\infofield}[2]{\mbox{\makebox[5mm]{\textcolor{accent}{\normalsize #1}}\hspace{0.5em}#2}\vspace{0.2em}\newline}
+\newcommand{\infofield}[2]{\mbox{\makebox[5mm]{\textcolor{accent}{\normalsize #1}}\hspace{0.5em}#2}\vspace{0.2em}}
 \newcommand{\email}[1]{\infofield{\faEnvelope}{\href{mailto:#1}{#1}}}
 \newcommand{\address}[1]{\infofield{\faAt}{#1}}
 \newcommand{\location}[1]{\infofield{\faMapMarker}{#1}}
@@ -393,10 +393,10 @@
 % format job/school list
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\job}[4]{%
-    {\color{emphasis} \textbf{\textrm{#3}}}
-        \footnotesize
+    {\color{emphasis} \textbf{#3}}
+%         \footnotesize
         \hspace{0.5em}%
-          #2
+          #2 
         \par
         \vspace{0.1em}
           {\color{gray}    #1}
